@@ -1,0 +1,27 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background: url('Error.jpg') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.error-container {
+    text-align: center;
+    color: rgba(0, 5, 10, 0.8); /* Transparent text color */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Slight shadow for better readability */
+}
+
+.error-container h1 {
+    font-size: 72px;
+    margin: 0;
+}
+
+.error-container p {
+    font-size: 24px;
+    margin: 10px 0 0;
+}
