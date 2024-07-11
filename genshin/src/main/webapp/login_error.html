@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Error</title>
+    <link rel="stylesheet" href="login_error.css">
+    <script>
+        function tryAgain() {
+            window.location.href = "http://localhost:8080/genshin/login.html"; // Replace with the URL of your login page
+        }
+    </script>
+</head>
+<body>
+    <div class="error-container">
+        <p>Your credentials mismatch, please try again!!</p>
+        <button type="button" onclick="tryAgain()">Try Again</button>
+
+    </div>
+</body>
+</html>

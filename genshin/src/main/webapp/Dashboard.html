@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banking Dashboard</title>
+    <link rel="stylesheet" href="Dashboard.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Banking Dashboard</h1>
+        <p>Balance: <span id="balance">$0.00</span></p>
+        
+        <input type="number" id="amount" placeholder="Enter amount">
+        
+        <button class="deposit" onclick="handleDeposit()">Deposit</button>
+        <button class="withdraw" onclick="handleWithdraw()">Withdraw</button>
+        <button class="statement" onclick="generateStatement()">Generate Statement</button>
+        <button class="exit" onclick="closeWindow()">Exit</button>
+
+        <div id="message" class="message"></div>
+
+        <div id="statement-container"></div>
+    </div>
+
+    <script src="Dashboard.js"></script>
+</body>
+</html>

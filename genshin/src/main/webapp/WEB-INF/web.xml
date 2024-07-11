@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element><web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://jakarta.ee/xml/ns/jakartaee" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd" version="6.0">
+  <servlet>
+    <description></description>
+    <display-name>server</display-name>
+    <servlet-name>server</servlet-name>
+    <servlet-class>server</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>server</servlet-name>
+    <url-pattern>/server</url-pattern>
+  </servlet-mapping>
+
+      <servlet>
+    <description></description>
+    <display-name>deposit</display-name>
+    <servlet-name>deposit</servlet-name>
+    <servlet-class>deposit</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>deposit</servlet-name>
+    <url-pattern>/deposit</url-pattern>
+  </servlet-mapping>
+  
+    <servlet>
+    <description></description>
+    <display-name>withdraw</display-name>
+    <servlet-name>withdraw</servlet-name>
+    <servlet-class>withdraw</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>withdraw</servlet-name>
+    <url-pattern>/withdraw</url-pattern>
+  </servlet-mapping>
+  
+  
+   <servlet>
+    <description></description>
+    <display-name>newuser</display-name>
+    <servlet-name>newuser</servlet-name>
+    <servlet-class>newuser</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>newuser</servlet-name>
+    <url-pattern>/newuser</url-pattern>
+  </servlet-mapping>
+  
+  <display-name>genshin</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+</web-app></element>
