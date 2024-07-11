@@ -1,0 +1,132 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banking Dashboard</title>
+    <link rel="stylesheet" href="Dashboard.css">
+    <style>
+        /* Inline styles can also be placed here if needed */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #1c1c1c;
+            color: #fff;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background-color: #252525;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 40px #00ff00;
+            text-align: center;
+            transition: box-shadow 0.3s;
+        }
+
+        .container:hover {
+            box-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00, 0 0 60px #00ff00;
+        }
+
+        h1 {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        input[type="number"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #00ff00;
+            border-radius: 4px;
+            background-color: #333;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        button {
+            width: calc(100% - 20px);
+            padding: 10px;
+            font-size: 1em;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: transform 0.3s, background-color 0.3s;
+            margin-bottom: 15px;
+        }
+
+        button.deposit {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        button.withdraw {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        button.statement {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        button.exit {
+            background-color: #6c757d;
+            color: #fff;
+        }
+
+        button:hover {
+            transform: translateY(-5px);
+        }
+
+        button.deposit:hover {
+            background-color: #218838;
+        }
+
+        button.withdraw:hover {
+            background-color: #c82333;
+        }
+
+        button.statement:hover {
+            background-color: #0056b3;
+        }
+
+        button.exit:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Banking Dashboard</h1>
+        <p>Balance: <span id="balance">$0.00</span></p>
+        
+        <input type="number" id="amount" placeholder="Enter amount">
+        
+        <button class="deposit" onclick="handleDeposit()">Deposit</button>
+        <button class="withdraw" onclick="handleWithdraw()">Withdraw</button>
+        <button class="statement" onclick="generateStatement()">Generate Statement</button>
+        <form action = "LogoutServlet" method="post"><button type="submit">Logout</button></form>
+
+        <div id="message" class="message"></div>
+
+        <div id="statement-container"></div>
+    </div>
+
+    <script src="Dashboard.js"></script>
+</body>
+</html>
