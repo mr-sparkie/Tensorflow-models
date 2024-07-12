@@ -10,9 +10,8 @@ public class User {
     private String dob;
     private String idProof;
     private int initialBalance;
-    private int password;
 
-    public User(int accNo, String fullName, String address, String mobileNo, String email, String accType, String dob, String idProof, int initialBalance, int password) {
+    public User(int accNo, String fullName, String address, String mobileNo, String email, String accType, String dob, String idProof, int initialBalance) {
         this.accNo = accNo;
         this.fullName = fullName;
         this.address = address;
@@ -22,7 +21,6 @@ public class User {
         this.dob = dob;
         this.idProof = idProof;
         this.initialBalance = initialBalance;
-        this.password = password;
     }
 
     // Getters and Setters
@@ -98,14 +96,6 @@ public class User {
         this.initialBalance = initialBalance;
     }
 
-    public int getPassword() {
-        return password;
-    }
-
-    public void setPassword(int password) {
-        this.password = password;
-    }
-
     @Override
     public String toString() {
         return "User{" +
@@ -118,7 +108,6 @@ public class User {
                 ", dob='" + dob + '\'' +
                 ", idProof='" + idProof + '\'' +
                 ", initialBalance=" + initialBalance +
-                ", password=" + password +
                 '}';
     }
 }

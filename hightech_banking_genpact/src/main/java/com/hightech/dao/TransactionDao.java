@@ -14,6 +14,7 @@ import java.util.List;
 
 public class TransactionDao {
 
+    // Method to get balance for an account
     public int getBalance(int accNo) throws SQLException {
         String query = "SELECT intial_balance FROM clients WHERE acc_no = ?";
         try (Connection conn = ConnectionFactory.getConnection();
@@ -28,6 +29,7 @@ public class TransactionDao {
         return 0;
     }
 
+    // Method to update balance for an account
     public void updateBalance(int accNo, int balance) throws SQLException {
         String query = "UPDATE clients SET intial_balance = ? WHERE acc_no = ?";
         try (Connection conn = ConnectionFactory.getConnection();
@@ -38,12 +40,13 @@ public class TransactionDao {
         }
     }
 
+    // Method to save a transaction (generic)
     public void saveTransaction(Transaction transaction) throws SQLException {
         String query = "INSERT INTO transactions (acc_no, type, amount, updated_balance, timestamp) " +
                 "VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setInt(1, transaction.getAccNo()); // Use getAccNo() method
+            stmt.setInt(1, transaction.getAccNo());
             stmt.setString(2, transaction.getType());
             stmt.setBigDecimal(3, transaction.getAmount());
             stmt.setBigDecimal(4, transaction.getUpdatedBalance());
@@ -53,6 +56,7 @@ public class TransactionDao {
         }
     }
 
+    // Method to save a deposit transaction
     public void saveDepositTransaction(Transaction transaction) throws SQLException {
         String query = "INSERT INTO transactions (acc_no, type, amount, updated_balance, timestamp) " +
                 "VALUES (?, ?, ?, ?, ?)";
@@ -68,6 +72,7 @@ public class TransactionDao {
         }
     }
 
+    // Method to save a withdrawal transaction
     public void saveWithdrawTransaction(Transaction transaction) throws SQLException {
         String query = "INSERT INTO transactions (acc_no, type, amount, updated_balance, timestamp) " +
                 "VALUES (?, ?, ?, ?, ?)";
@@ -83,6 +88,7 @@ public class TransactionDao {
         }
     }
 
+    // Method to get all transactions for an account
     public List<Transaction> getAllTransactionsForAccount(int accNo) throws SQLException {
         List<Transaction> transactions = new ArrayList<>();
         String query = "SELECT * FROM transactions WHERE acc_no = ? ORDER BY timestamp DESC";
@@ -105,6 +111,7 @@ public class TransactionDao {
         return transactions;
     }
 
+    // Method to get the current (latest) transaction
     public Transaction getCurrentTransaction() throws SQLException {
         Transaction transaction = null;
         String query = "SELECT * FROM transactions ORDER BY timestamp DESC LIMIT 1";
@@ -125,24 +132,49 @@ public class TransactionDao {
         return transaction;
     }
 
-    public List<Transaction> getLast10Transactions() throws SQLException {
+    // Method to get the last 10 transfer transactions
+    public List<Transaction> getLast10TransferTransactions() throws SQLException {
         List<Transaction> transactions = new ArrayList<>();
-        String query = "SELECT * FROM transactions ORDER BY timestamp DESC LIMIT 10";
+        String query = "SELECT * FROM transfer ORDER BY timestamp DESC LIMIT 10";
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 int transactionId = rs.getInt("transaction_id");
                 int accNo = rs.getInt("acc_no");
-                String type = rs.getString("type");
+                int receiverAccNo = rs.getInt("receiver_acc_no");
                 BigDecimal amount = rs.getBigDecimal("amount");
-                BigDecimal updatedBalance = rs.getBigDecimal("updated_balance");
                 LocalDateTime timestamp = rs.getObject("timestamp", LocalDateTime.class);
 
-                Transaction transaction = new Transaction(transactionId, accNo, type, amount, updatedBalance, timestamp);
+                Transaction transaction = new Transaction(transactionId, accNo, "Transfer", amount, null, timestamp);
+                transaction.setReceiverAccNo(receiverAccNo);
                 transactions.add(transaction);
             }
         }
         return transactions;
+    }
+
+    // Method to create a trigger in the database for balance updates
+    public void createTriggerForBalanceUpdate() throws SQLException {
+        String triggerQuery = "CREATE TRIGGER balance_update_trigger " +
+                "AFTER UPDATE ON clients " +
+                "FOR EACH ROW " +
+                "BEGIN " +
+                "    INSERT INTO transactions (acc_no, type, amount, updated_balance, timestamp) " +
+                "    VALUES (NEW.acc_no, 'Balance Update', NEW.intial_balance - OLD.intial_balance, NEW.intial_balance, NOW()); " +
+                "END";
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(triggerQuery)) {
+            stmt.executeUpdate();
+        }
+    }
+
+    // Method to drop the trigger from the database
+    public void dropTriggerForBalanceUpdate() throws SQLException {
+        String triggerQuery = "DROP TRIGGER IF EXISTS balance_update_trigger";
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(triggerQuery)) {
+            stmt.executeUpdate();
+        }
     }
 }

@@ -2,8 +2,8 @@ package com.hightech.controllers;
 
 import com.hightech.service.UserService;
 import com.hightech.service.AdminService;
+
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -11,7 +11,6 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-@WebServlet("/login1")
 public class login extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private final UserService userService = new UserService();
@@ -44,7 +43,7 @@ public class login extends HttpServlet {
                     response.sendRedirect("login_error.jsp");
                 }
             } else {
-                int password = Integer.parseInt(request.getParameter("password"));
+                String password =request.getParameter("password");
                 boolean isValidClient = userService.login(accNo, password);
                 if (isValidClient) {
                     HttpSession session = request.getSession();

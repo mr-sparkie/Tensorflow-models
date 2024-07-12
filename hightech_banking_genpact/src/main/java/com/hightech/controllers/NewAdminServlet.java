@@ -8,6 +8,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
@@ -22,6 +23,12 @@ public class NewAdminServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("accNo") == null) {
+            response.sendRedirect("login.jsp");
+            return;
+        }
+
         int adminId = Integer.parseInt(request.getParameter("admin_id"));
         String username = request.getParameter("username");
         String password = request.getParameter("password");
@@ -32,7 +39,7 @@ public class NewAdminServlet extends HttpServlet {
             response.sendRedirect("admin.jsp"); // Redirect to admin panel page
         } else {
             // Handle error
-        	response.sendRedirect("error.jsp");
+            response.sendRedirect("error.jsp");
         }
     }
 }

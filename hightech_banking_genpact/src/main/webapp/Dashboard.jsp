@@ -1,5 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,29 +14,29 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #1c1c1c;
-            color: #fff;
+            background-color: #f0f0f0; /* Formal light gray background */
+            color: #333; /* Dark gray text color */
         }
 
         .container {
             width: 100%;
             max-width: 400px;
-            background-color: #252525;
+            background-color: #ffffff; /* White background */
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 40px #00ff00;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Soft shadow */
             text-align: center;
             transition: box-shadow 0.3s;
         }
 
         .container:hover {
-            box-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00, 0 0 60px #00ff00;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow on hover */
         }
 
         h1 {
             font-size: 1.8em;
             font-weight: bold;
-            color: #fff;
+            color: #333; /* Dark gray text color */
             margin-bottom: 20px;
         }
 
@@ -51,10 +49,10 @@
             width: calc(100% - 20px);
             padding: 10px;
             font-size: 1em;
-            border: 1px solid #00ff00;
+            border: 1px solid #ccc; /* Light gray border */
             border-radius: 4px;
-            background-color: #333;
-            color: #fff;
+            background-color: #f9f9f9; /* Light gray background */
+            color: #333; /* Dark gray text color */
             margin-bottom: 20px;
         }
 
@@ -70,23 +68,23 @@
         }
 
         button.deposit {
-            background-color: #28a745;
-            color: #fff;
+            background-color: #4CAF50; /* Green deposit button */
+            color: #fff; /* White text color */
         }
 
         button.withdraw {
-            background-color: #dc3545;
-            color: #fff;
+            background-color: #f44336; /* Red withdraw button */
+            color: #fff; /* White text color */
         }
 
         button.statement {
-            background-color: #007bff;
-            color: #fff;
+            background-color: #2196F3; /* Blue statement button */
+            color: #fff; /* White text color */
         }
 
         button.exit {
-            background-color: #6c757d;
-            color: #fff;
+            background-color: #757575; /* Dark gray logout button */
+            color: #fff; /* White text color */
         }
 
         button:hover {
@@ -94,19 +92,19 @@
         }
 
         button.deposit:hover {
-            background-color: #218838;
+            background-color: #45a049; /* Darker green on hover */
         }
 
         button.withdraw:hover {
-            background-color: #c82333;
+            background-color: #c82333; /* Darker red on hover */
         }
 
         button.statement:hover {
-            background-color: #0056b3;
+            background-color: #0b7dda; /* Darker blue on hover */
         }
 
         button.exit:hover {
-            background-color: #5a6268;
+            background-color: #5a6268; /* Darker gray on hover */
         }
     </style>
 </head>
@@ -120,7 +118,9 @@
         <button class="deposit" onclick="handleDeposit()">Deposit</button>
         <button class="withdraw" onclick="handleWithdraw()">Withdraw</button>
         <button class="statement" onclick="generateStatement()">Generate Statement</button>
-        <form action = "LogoutServlet" method="post"><button type="submit">Logout</button></form>
+        <form action="LogoutServlet" method="post">
+            <button type="submit" class="exit">Logout</button>
+        </form>
 
         <div id="message" class="message"></div>
 

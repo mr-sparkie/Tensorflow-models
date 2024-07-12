@@ -5,15 +5,12 @@ import java.time.LocalDateTime;
 
 public class Transaction {
     private int transactionId;
-    private int accNo; // Assuming this is the account number field
-    private String type; // deposit or withdraw
+    private int accNo;
+    private String type;
     private BigDecimal amount;
     private BigDecimal updatedBalance;
     private LocalDateTime timestamp;
-
-    public Transaction() {
-        // Default constructor
-    }
+    private int receiverAccNo; // Add this field
 
     public Transaction(int transactionId, int accNo, String type, BigDecimal amount, BigDecimal updatedBalance, LocalDateTime timestamp) {
         this.transactionId = transactionId;
@@ -24,6 +21,16 @@ public class Transaction {
         this.timestamp = timestamp;
     }
 
+    // Add getter and setter for receiverAccNo
+    public int getReceiverAccNo() {
+        return receiverAccNo;
+    }
+
+    public void setReceiverAccNo(int receiverAccNo) {
+        this.receiverAccNo = receiverAccNo;
+    }
+
+    // Getters and setters
     public int getTransactionId() {
         return transactionId;
     }

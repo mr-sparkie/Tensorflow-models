@@ -13,9 +13,9 @@ public class UserService {
     private AdminDao adminDao = new AdminDao();
     private TransactionDao transactionDao = new TransactionDao();
 
-    public boolean login(int accNo, int password) throws SQLException {
-        HashMap<Integer, Integer> users = userDao.validate();
-        return users.containsKey(accNo) && users.get(accNo) == password;
+    public boolean login(int accNo, String password) throws SQLException {
+        HashMap<Integer, String> users = userDao.validate();
+        return users.containsKey(accNo) && users.get(accNo).equals(password);
     }
 
     public int getBalance(int accNo) throws SQLException {
@@ -45,4 +45,9 @@ public class UserService {
         System.out.print(admins);
         return admins.containsKey(accNo);
     }
+
+	public void transfer(int accNo, int receiverAccNo, int amount) {
+		// TODO Auto-generated method stub
+		
+	}
 }

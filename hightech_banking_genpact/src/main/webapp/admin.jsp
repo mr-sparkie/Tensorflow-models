@@ -8,16 +8,17 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
+            background-color: #1c1c1c;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
+            color: #fff;
         }
         .admin-panel {
-            background-color: #ffffff;
-            border: 1px solid #ccc;
+            background-color: #252525;
+            border: 1px solid #00ff00;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
             padding: 20px;
