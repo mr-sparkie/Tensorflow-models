@@ -106,9 +106,9 @@
     <div class="container">
         <h2>Admin Panel</h2>
         <div class="tabs">
-            <button class="tablinks active" onclick="openTab(event, 'insert')">Insert User</button>
-            <button class="tablinks" onclick="openTab(event, 'update')">Update User</button>
-            <button class="tablinks" onclick="openTab(event, 'delete')">Delete User</button>
+            <button id="insert-tab" class="tablinks active" onclick="openTab(event, 'insert')">Insert User</button>
+            <button id="update-tab" class="tablinks" onclick="openTab(event, 'update')">Update User</button>
+            <button id="delete-tab" class="tablinks" onclick="openTab(event, 'delete')">Delete User</button>
         </div>
         
         <!-- Insert User Form -->
@@ -132,48 +132,43 @@
                 <input type="date" id="dob" name="dob" required><br>
                 <label for="id_proof">ID Proof:</label>
                 <input type="text" id="id_proof" name="id_proof" required><br>
-                <label for="initial_balance">Initial Balance:</label>
-                <input type="number" id="initial_balance" name="initial_balance" required><br>
                 <input type="submit" value="Submit">
             </form>
         </div>
 
-<!-- Update User Form -->
-<div id="update" class="tabcontent">
-    <h3>Update User</h3>
-    <form action="newuser" method="post" id="updateUserForm">
-        <input type="hidden" name="action" value="fetch">
-        <label for="update_acc_no">Account Number:</label>
-        <input type="number" id="update_acc_no" name="acc_no" required><br>
-        <input type="submit" value="Fetch User">
-    </form>
+        <!-- Update User Form -->
+        <div id="update" class="tabcontent">
+            <h3>Update User</h3>
+            <form action="newuser" method="post" id="updateUserForm">
+                <input type="hidden" name="action" value="fetch">
+                <label for="update_acc_no">Account Number:</label>
+                <input type="number" id="update_acc_no" name="acc_no" required><br>
+                <input type="submit" value="Fetch User">
+            </form>
 
-    <%-- Display fetched user details for update --%>
-    <c:if test="${not empty user}">
-        <form action="newuser" method="post" id="updateDetailsForm">
-            <input type="hidden" name="action" value="update">
-            <input type="hidden" name="acc_no" value="${user.accNo}">
-            <label for="update_full_name">Full Name:</label>
-            <input type="text" id="update_full_name" name="full_name" value="${user.fullName}" required><br>
-            <label for="update_address">Address:</label>
-            <input type="text" id="update_address" name="address" value="${user.address}" required><br>
-            <label for="update_mobile_no">Mobile Number:</label>
-            <input type="text" id="update_mobile_no" name="mobile_no" value="${user.mobileNo}" required><br>
-            <label for="update_email">Email:</label>
-            <input type="email" id="update_email" name="email" value="${user.email}" required><br>
-            <label for="update_acc_type">Account Type:</label>
-            <input type="text" id="update_acc_type" name="acc_type" value="${user.accType}" required><br>
-            <label for="update_dob">Date of Birth:</label>
-            <input type="date" id="update_dob" name="dob" value="${user.dob}" required><br>
-            <label for="update_id_proof">ID Proof:</label>
-            <input type="text" id="update_id_proof" name="id_proof" value="${user.idProof}" required><br>
-            <label for="update_initial_balance">Initial Balance:</label>
-            <input type="number" id="update_initial_balance" name="initial_balance" value="${user.initialBalance}" required><br>
-            <input type="submit" value="Update User">
-        </form>
-    </c:if>
-</div>
-
+            <!-- Display fetched user details for update -->
+            <c:if test="${not empty user}">
+                <form action="newuser" method="post" id="updateDetailsForm">
+                    <input type="hidden" name="action" value="update">
+                    <input type="hidden" name="acc_no" value="${user.accNo}">
+                    <label for="update_full_name">Full Name:</label>
+                    <input type="text" id="update_full_name" name="full_name" value="${user.fullName}" required><br>
+                    <label for="update_address">Address:</label>
+                    <input type="text" id="update_address" name="address" value="${user.address}" required><br>
+                    <label for="update_mobile_no">Mobile Number:</label>
+                    <input type="text" id="update_mobile_no" name="mobile_no" value="${user.mobileNo}" required><br>
+                    <label for="update_email">Email:</label>
+                    <input type="email" id="update_email" name="email" value="${user.email}" required><br>
+                    <label for="update_acc_type">Account Type:</label>
+                    <input type="text" id="update_acc_type" name="acc_type" value="${user.accType}" required><br>
+                    <label for="update_dob">Date of Birth:</label>
+                    <input type="date" id="update_dob" name="dob" value="${user.dob}" required><br>
+                    <label for="update_id_proof">ID Proof:</label>
+                    <input type="text" id="update_id_proof" name="id_proof" value="${user.idProof}" required><br>
+                    <input type="submit" value="Update User">
+                </form>
+            </c:if>
+        </div>
 
         <!-- Delete User Form -->
         <div id="delete" class="tabcontent">

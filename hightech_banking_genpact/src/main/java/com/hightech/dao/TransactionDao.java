@@ -177,4 +177,9 @@ public class TransactionDao {
             stmt.executeUpdate();
         }
     }
+
+	public void recordTransfer(int accNo, int receiverAccNo, int amount) {
+		// TODO Auto-generated method stub
+		
+	}
 }

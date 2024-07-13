@@ -109,4 +109,14 @@
     <servlet-name>FetchUserServlet</servlet-name>
     <url-pattern>/FetchUserServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ForgotPassword</display-name>
+    <servlet-name>ForgotPassword</servlet-name>
+    <servlet-class>com.hightech.controllers.ForgotPassword</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ForgotPassword</servlet-name>
+    <url-pattern>/forgotPassword</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -28,21 +28,33 @@ public class SessionFilter implements Filter {
         HttpSession session = httpRequest.getSession(false); // Use getSession(false) to not create a new session if it doesn't exist
 
         String loginURI = httpRequest.getContextPath() + "/login";
-        boolean loggedIn = (session != null && session.getAttribute("accNo") != null);
+        String forgotPasswordURI = httpRequest.getContextPath() + "/forgotPassword";
+        boolean loggedIn = (session != null && session.getAttribute("isLoggedIn") != null && (boolean) session.getAttribute("isLoggedIn"));
         boolean loginRequest = httpRequest.getRequestURI().equals(loginURI);
+        boolean forgotPasswordRequest = httpRequest.getRequestURI().equals(forgotPasswordURI);
         boolean isLoginPage = httpRequest.getRequestURI().endsWith("login.jsp");
 
-        // Check if user is trying to access admin pages directly
-        boolean isAdminPage = httpRequest.getRequestURI().contains("/admin");
+        // Check if the request is for a restricted page
+        boolean isRestrictedPage = httpRequest.getRequestURI().endsWith("AddAdmin.jsp")
+                                || httpRequest.getRequestURI().endsWith("admin.jsp")
+                                || httpRequest.getRequestURI().endsWith("admin-panel.jsp")
+                                || httpRequest.getRequestURI().endsWith("statement.jsp")
+                                || httpRequest.getRequestURI().endsWith("Dashboard.jsp");
 
-        if (loggedIn || loginRequest || isLoginPage) {
-            // Allow logged-in users, login requests, and access to login.jsp
-            chain.doFilter(request, response);
-        } else if (isAdminPage) {
-            // Redirect to login.jsp if trying to access admin pages without logging in as admin
-            httpResponse.sendRedirect("login.jsp");
+        if (loggedIn || loginRequest || forgotPasswordRequest || isLoginPage) {
+            // Allow logged-in users, login requests, forgot password requests, and access to login.jsp
+            if (isRestrictedPage && loggedIn) {
+                String role = (String) session.getAttribute("role");
+                if (role != null && role.equals("admin")) {
+                    chain.doFilter(request, response);
+                } else {
+                    chain.doFilter(request, response);
+                }
+            } else {
+                chain.doFilter(request, response);
+            }
         } else {
-            // Forward to login.jsp for all other unauthorized accesses
+            // Redirect to login.jsp for all other unauthorized accesses
             httpResponse.sendRedirect("login.jsp");
         }
     }

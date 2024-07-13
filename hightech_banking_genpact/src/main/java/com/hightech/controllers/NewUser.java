@@ -7,7 +7,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -76,19 +75,19 @@ public class NewUser extends HttpServlet {
         try {
             User user = userDao.getUserDetails(accNo);
             if (user != null) {
-              request.setAttribute("user", user);
-              request.setAttribute("activeTab", "update"); // Set active tab to update if user found
+                request.setAttribute("user", user);
+                request.setAttribute("activeTab", "update"); // Set active tab to update if user found
+                request.getRequestDispatcher("admin-panel.jsp").forward(request, response);
             } else {
-            response.sendRedirect("error.jsp"); // Set active tab to insert if user not found
+                request.setAttribute("errorMessage", "User not found for Account Number: " + accNo);
+                request.getRequestDispatcher("error.jsp").forward(request, response);
             }
-      request.getRequestDispatcher("admin-panel.jsp").forward(request, response);
         } catch (SQLException e) {
             e.printStackTrace();
             // Handle database errors, redirect to error.jsp or appropriate error page
             response.sendRedirect("error.jsp");
         }
     }
-
 
     private void updateUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Get parameters from the request

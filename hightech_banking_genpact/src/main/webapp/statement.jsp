@@ -89,6 +89,7 @@
                     <th>Transaction ID</th>
                     <th>Sender Account Number</th>
                     <th>Amount</th>
+                    <th>type</th>
                     <th>Timestamp</th>
                 </tr>
             </thead>
@@ -109,13 +110,18 @@
                         while (rs.next()) {
                             int transferId = rs.getInt("transfer_id");
                             int senderAccNo = rs.getInt("sender_acc_no");
-                            BigDecimal amount = rs.getBigDecimal("amount");
+                            int amount = rs.getInt("amount");
+                            String type = "deposit";
+                            if(amount < 0){
+                            	type = "withdraw";
+                            }
                             LocalDateTime timestamp = rs.getObject("timestamp", LocalDateTime.class);
                 %>
                 <tr>
                     <td><%= transferId %></td>
                     <td><%= senderAccNo %></td>
-                    <td>$<%= amount.setScale(2, BigDecimal.ROUND_HALF_UP) %></td>
+                    <td><%= Math.abs(amount) %></td>
+                     <td><%= type %></td>
                     <td><%= timestamp.toString() %></td>
                 </tr>
                 <%

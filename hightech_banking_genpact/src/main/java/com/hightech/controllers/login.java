@@ -27,41 +27,46 @@ public class login extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             int accNo = Integer.parseInt(request.getParameter("username"));
+            String password = request.getParameter("password");
 
             // Check if it's an admin login
             boolean isAdmin = userService.isAdmin(accNo);
 
             if (isAdmin) {
-                String password = request.getParameter("password");
                 boolean isValidAdmin = adminService.adminLogin(accNo, password);
                 if (isValidAdmin) {
                     HttpSession session = request.getSession();
                     session.setAttribute("accNo", accNo);
                     session.setAttribute("role", "admin");
+                    session.setAttribute("isLoggedIn", true);
                     response.sendRedirect("admin.jsp");
                 } else {
-                    response.sendRedirect("login_error.jsp");
+                    request.setAttribute("accNo", accNo); // Retain accNo
+                    request.setAttribute("errorMessage", "Invalid credentials. Please try again.");
+                    request.getRequestDispatcher("login.jsp").forward(request, response);
                 }
             } else {
-                String password =request.getParameter("password");
                 boolean isValidClient = userService.login(accNo, password);
                 if (isValidClient) {
                     HttpSession session = request.getSession();
                     session.setAttribute("accNo", accNo);
                     session.setAttribute("role", "client");
+                    session.setAttribute("isLoggedIn", true);
                     response.sendRedirect("Dashboard.jsp");
                 } else {
-                    response.sendRedirect("login_error.jsp");
+                    request.setAttribute("accNo", accNo); // Retain accNo
+                    request.setAttribute("errorMessage", "Invalid credentials. Please try again.");
+                    request.getRequestDispatcher("login.jsp").forward(request, response);
                 }
             }
         } catch (NumberFormatException e) {
-            // Handle invalid input (non-numeric username or password)
-            System.err.println("Error parsing login credentials: " + e.getMessage());
-            response.sendRedirect("login_error.jsp");
+            // Handle invalid input (non-numeric username)
+            request.setAttribute("errorMessage", "Invalid input. Please enter a valid account number.");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         } catch (Exception e) {
             // Handle other exceptions
-            System.err.println("Error during login: " + e.getMessage());
-            response.sendRedirect("login_error.jsp");
+            request.setAttribute("errorMessage", "An error occurred. Please try again.");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         }
     }
 }
