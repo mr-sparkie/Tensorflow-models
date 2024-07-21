@@ -86,9 +86,10 @@
 
         .error-message {
             color: #FF6B6B;
+            
             font-size: 0.9em;
             margin-top: 10px;
-            text-align: left;
+            text-align: center;
         }
 
         .bottom-text {

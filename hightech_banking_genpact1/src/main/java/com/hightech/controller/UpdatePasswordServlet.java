@@ -1,7 +1,6 @@
 package com.hightech.controller;
 
 import jakarta.servlet.ServletException;
-//import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -30,7 +29,8 @@ public class UpdatePasswordServlet extends HttpServlet {
             // Validate inputs
             if (accNoStr == null || oldPassword == null || newPassword == null || confirmPassword == null ||
                 accNoStr.isEmpty() || oldPassword.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty()) {
-                response.sendRedirect("login.jsp?passwordUpdateError=1");
+                request.setAttribute("errorMessage", "All fields are required.");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
 
@@ -38,7 +38,8 @@ public class UpdatePasswordServlet extends HttpServlet {
 
             // Check if newPassword matches confirmPassword
             if (!newPassword.equals(confirmPassword)) {
-                response.sendRedirect("login.jsp?passwordMismatch=1");
+                request.setAttribute("errorMessage", "Passwords do not match.");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
 
@@ -46,7 +47,8 @@ public class UpdatePasswordServlet extends HttpServlet {
             boolean isOldPasswordCorrect = userService.verifyOldPassword(userId, oldPassword);
 
             if (!isOldPasswordCorrect) {
-                response.sendRedirect("login.jsp?incorrectOldPassword=1");
+                request.setAttribute("errorMessage", "Incorrect old password.");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
 
@@ -54,17 +56,21 @@ public class UpdatePasswordServlet extends HttpServlet {
             boolean isUpdated = userService.updatePassword(userId, oldPassword, newPassword);
 
             if (isUpdated) {
-                response.sendRedirect("login.jsp?passwordUpdateSuccess=1");
+                request.setAttribute("successMessage", "Password updated successfully.");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
             } else {
-                response.sendRedirect("login.jsp?passwordUpdateError=1");
+                request.setAttribute("errorMessage", "Failed to update password.");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
             }
         } catch (NumberFormatException e) {
             // Handle invalid number format for accno parameter
-            response.sendRedirect("login.jsp?passwordUpdateError=1");
+            request.setAttribute("errorMessage", "Invalid account number format.");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         } catch (Exception e) {
             // Handle other exceptions
             e.printStackTrace(); // Log the exception for debugging
-            response.sendRedirect("login.jsp?passwordUpdateError=1");
+            request.setAttribute("errorMessage", "An error occurred.");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         }
     }
 }

@@ -1,15 +1,35 @@
 package com.hightech.services;
 
 import com.hightech.bean.Task;
-import com.hightech.dao.exception.CustomDAOException;
-
+import com.hightech.dao.TaskDAO;
 import java.util.List;
 
-public interface TaskService {
-    Task getTaskById(int taskId) throws CustomDAOException;
-    List<Task> getAllTasks() throws CustomDAOException;
-    List<Task> getTasksByUserId(int userId) throws CustomDAOException;
-    boolean addTask(Task task) throws CustomDAOException;
-    boolean updateTask(Task task) throws CustomDAOException;
-    boolean deleteTask(int taskId) throws CustomDAOException;
+public class TaskService {
+
+    private TaskDAO taskDAO;
+
+    public TaskService() {
+        this.taskDAO = new TaskDAO();
+    }
+
+    public String addTask(int userId, String project, String dateStr, String startTimeStr, String endTimeStr,
+                          String taskCategory, String description) {
+        return taskDAO.addTask(userId, project, dateStr, startTimeStr, endTimeStr, taskCategory, description);
+    }
+
+    public List<Task> getAllTasks() {
+        return taskDAO.getAllTasks();
+    }
+
+    public boolean updateTask(Task task) {
+        return taskDAO.updateTask(task);
+    }
+
+    public boolean deleteTask(int taskId) {
+        return taskDAO.deleteTask(taskId);
+    }
+
+    public Task getTaskById(int taskId) {
+        return taskDAO.getTaskById(taskId);
+    }
 }

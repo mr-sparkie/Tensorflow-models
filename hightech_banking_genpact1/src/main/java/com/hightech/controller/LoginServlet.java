@@ -1,6 +1,7 @@
 package com.hightech.controller;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,37 +24,43 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            // Get username (assuming it's the user ID) and password from request parameters
-            int userId = Integer.parseInt(request.getParameter("username"));
+            // Get account number and password from request parameters
+            int accountNumber = Integer.parseInt(request.getParameter("username"));
             String password = request.getParameter("password");
 
             // Authenticate user
-            User user = userService.authenticateUser(userId, password);
+            User user = userService.authenticateUser(accountNumber, password);
 
             if (user != null) {
-                // Create a session if user authentication is successful
-                HttpSession session = request.getSession();
+                // Create a new session
+                HttpSession session = request.getSession(true); // Ensures a new session is created
+
+                // Set user and account number attributes in session
                 session.setAttribute("user", user);
+                session.setAttribute("user_id", accountNumber);
 
                 // Redirect to respective dashboard based on user role
                 if ("Admin".equals(user.getRole())) {
                     response.sendRedirect("adminDashboard.jsp");
                 } else if ("Associate".equals(user.getRole())) {
-                    response.sendRedirect("associateDashboard.jsp");
+                    response.sendRedirect("taskDashboard.jsp");
                 } else {
                     response.sendRedirect("userDashboard.jsp");
                 }
             } else {
-                // Redirect back to login page with error message
-                response.sendRedirect("login.jsp?error=1");
+                // Set error message attribute and redirect back to login page
+                request.setAttribute("errorMessage", "Invalid credentials. Please try again.");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
             }
         } catch (NumberFormatException e) {
-            // Handle invalid number format for user ID
-            response.sendRedirect("login.jsp?error=1");
+            // Handle invalid number format for account number
+            request.setAttribute("errorMessage", "Invalid account number format. Please enter a valid number.");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         } catch (Exception e) {
             // Handle other exceptions
             e.printStackTrace(); // Log the exception for debugging
-            response.sendRedirect("login.jsp?error=1");
+            request.setAttribute("errorMessage", "An unexpected error occurred. Please try again later.");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         }
     }
 }

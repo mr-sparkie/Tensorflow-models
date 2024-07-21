@@ -1,20 +1,33 @@
 package com.hightech.bean;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 
 public class Task {
     private int taskId;
     private int userId;
     private String project;
-    private Date date;
-    private Time startTime;
-    private Time endTime;
-    private double duration;
+    private Timestamp date;
+    private Timestamp startTime;
+    private Timestamp endTime;
+    private BigDecimal duration;
     private String taskCategory;
     private String description;
 
+    // Constructors, getters, and setters
     public Task() {
+    }
+
+    public Task(int taskId, int userId, String project, Timestamp date, Timestamp startTime, Timestamp endTime, BigDecimal duration, String taskCategory, String description) {
+        this.taskId = taskId;
+        this.userId = userId;
+        this.project = project;
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.duration = duration;
+        this.taskCategory = taskCategory;
+        this.description = description;
     }
 
     public int getTaskId() {
@@ -41,35 +54,35 @@ public class Task {
         this.project = project;
     }
 
-    public Date getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 
-    public Time getStartTime() {
+    public Timestamp getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Time startTime) {
+    public void setStartTime(Timestamp startTime) {
         this.startTime = startTime;
     }
 
-    public Time getEndTime() {
+    public Timestamp getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Time endTime) {
+    public void setEndTime(Timestamp endTime) {
         this.endTime = endTime;
     }
 
-    public double getDuration() {
+    public BigDecimal getDuration() {
         return duration;
     }
 
-    public void setDuration(double duration) {
+    public void setDuration(BigDecimal duration) {
         this.duration = duration;
     }
 
@@ -87,5 +100,20 @@ public class Task {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "taskId=" + taskId +
+                ", userId=" + userId +
+                ", project='" + project + '\'' +
+                ", date=" + date +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", duration=" + duration +
+                ", taskCategory='" + taskCategory + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 }
